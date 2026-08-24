@@ -1,0 +1,15 @@
+# Raw dataset
+data/raw/
+
+# Processed data
+data/processed/*.csv
+
+# Python
+.venv/
+__pycache__/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Mac
+.DS_Store
