@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import argparse
-from dataclasses import dataclass
+import json
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 import pandas as pd
@@ -46,6 +47,11 @@ class CleaningStats:
         self.outside_nyc += other.outside_nyc
         self.zero_passengers += other.zero_passengers
         self.output_rows += other.output_rows
+
+    def to_dict(self) -> dict[str, int]:
+        values = asdict(self)
+        values["removed_rows"] = self.removed_rows
+        return values
 
 
 def _validate_columns(df: pd.DataFrame) -> None:
@@ -147,6 +153,52 @@ def clean_csv(
     return totals
 
 
+def calculate_cleaning_stats(
+    input_path: str | Path,
+    chunksize: int = 1_000_000,
+) -> CleaningStats:
+    """Calculate exact cleaning statistics without writing a cleaned dataset."""
+    if chunksize <= 0:
+        raise ValueError("chunksize must be greater than zero")
+
+    source = Path(input_path)
+    if not source.is_file():
+        raise FileNotFoundError(f"Input CSV not found: {source}")
+
+    totals = CleaningStats()
+    chunks = pd.read_csv(
+        source,
+        usecols=sorted(REQUIRED_COLUMNS),
+        chunksize=chunksize,
+    )
+    for chunk_number, chunk in enumerate(chunks, start=1):
+        _, chunk_stats = _clean_dataframe_with_stats(chunk)
+        totals.add(chunk_stats)
+        print(
+            f"Statistics chunk {chunk_number}: "
+            f"processed {totals.input_rows:,} rows",
+            flush=True,
+        )
+
+    return totals
+
+
+def save_cleaning_stats(
+    stats: CleaningStats,
+    output_path: str | Path,
+) -> Path:
+    """Save cleaning statistics as an atomically written JSON file."""
+    destination = Path(output_path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary_output = destination.with_suffix(destination.suffix + ".tmp")
+    temporary_output.write_text(
+        json.dumps(stats.to_dict(), indent=2) + "\n",
+        encoding="utf-8",
+    )
+    temporary_output.replace(destination)
+    return destination
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Clean the NYC taxi training data in memory-safe chunks."
@@ -169,12 +221,27 @@ def _build_parser() -> argparse.ArgumentParser:
         default=1_000_000,
         help="Rows read per chunk (default: 1,000,000)",
     )
+    parser.add_argument(
+        "--stats-output",
+        type=Path,
+        default=Path("reports/cleaning_stats.json"),
+        help="Cleaning statistics JSON (default: reports/cleaning_stats.json)",
+    )
+    parser.add_argument(
+        "--stats-only",
+        action="store_true",
+        help="Calculate statistics without writing or replacing the cleaned CSV",
+    )
     return parser
 
 
 def main() -> None:
     args = _build_parser().parse_args()
-    stats = clean_csv(args.input, args.output, args.chunksize)
+    if args.stats_only:
+        stats = calculate_cleaning_stats(args.input, args.chunksize)
+    else:
+        stats = clean_csv(args.input, args.output, args.chunksize)
+    stats_path = save_cleaning_stats(stats, args.stats_output)
 
     print("\nCleaning complete")
     print(f"Input rows: {stats.input_rows:,}")
@@ -184,6 +251,7 @@ def main() -> None:
     print(f"Zero-passenger trips removed: {stats.zero_passengers:,}")
     print(f"Total rows removed: {stats.removed_rows:,}")
     print(f"Output rows: {stats.output_rows:,}")
+    print(f"Statistics saved to: {stats_path}")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 data/raw/
 
 # Processed data
-data/processed/*.csv
+data/processed/
 
 # Python
 .venv/
