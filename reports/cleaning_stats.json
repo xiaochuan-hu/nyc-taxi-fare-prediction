@@ -1,0 +1,9 @@
+{
+  "input_rows": 55423856,
+  "invalid_fares": 3834,
+  "invalid_coordinates": 3121,
+  "outside_nyc": 1221833,
+  "zero_passengers": 190710,
+  "output_rows": 54004358,
+  "removed_rows": 1419498
+}
