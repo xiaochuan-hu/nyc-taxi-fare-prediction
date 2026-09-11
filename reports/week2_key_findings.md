@@ -55,3 +55,36 @@ Within the fixed **250 × 250 bounding-box grid**, the densest 1% of cells conta
 **92.40% of pickups** and **84.58% of drop-offs**; the corresponding top-5%
 shares are **99.51%** and **97.99%**. These localized patterns suggest that
 geographic information may add predictive value beyond distance and time.
+
+
+## 6. Feature Engineering Summary
+
+The Notebook table documents source/generation, business meaning and selection rationale for nine candidates: `trip_distance`, `pickup_hour`, `day_of_week`, `is_weekend`, `passenger_count`, `pickup_longitude`, `pickup_latitude`, `dropoff_longitude`, and `dropoff_latitude`. Distance is Haversine straight-line distance; temporal fields retain the original datetime clock convention. `key` is excluded, `pickup_datetime` is only a source for derived temporal features, and `fare_amount` is the target.
+
+## 7. Feature Relevance Analysis
+
+Pearson/Spearman use the existing 300,000-row EDA sample. Mutual Information uses a reproducible 50,000-row subsample, seed 42, `n_neighbors=5`, and explicitly discrete temporal/passenger fields (`mutual_info_regression`). Settings, versions and sample indices are saved alongside the numeric results.
+
+| Feature | Pearson r (300k) | MI in nats (50k) |
+|---|---:|---:|
+| `trip_distance` | 0.8535 | 0.9101 |
+| `pickup_hour` | -0.0200 | 0.0130 |
+| `day_of_week` | 0.0023 | 0.0004 |
+| `is_weekend` | -0.0042 | 0.0000 |
+| `passenger_count` | 0.0132 | 0.0073 |
+| `pickup_longitude` | 0.4187 | 0.0990 |
+| `pickup_latitude` | -0.2142 | 0.0808 |
+| `dropoff_longitude` | 0.2984 | 0.1181 |
+| `dropoff_latitude` | -0.1735 | 0.1048 |
+
+Distance remains strongest in linear, monotonic and MI association. Geography ranks next in MI; its concentrated/localized spatial patterns cannot be valued using Pearson alone. Temporal features retain clear grouped/nonlinear patterns, even though hourly Pearson is near zero and weekly MI is small/zero. Day-of-week and weekend have overlapping information (Pearson ≈0.78).
+
+MI is model-independent univariate dependence, **not Model Feature Importance**, causation, or demonstrated incremental predictive value. Small/zero estimates do not prove absence of useful relationships. Prioritize distance, four coordinates and pickup hour for Week 3 validation; retain weekly fields and passenger count as secondary candidates. No predictive modeling is performed in this addition.
+
+## 8. Passenger Count: Full-Dataset Evidence
+
+Aggregation covers all **54,004,358** trips. One-passenger trips account for **69.39%**. Common counts 1–6 have average fares **$11.16–$12.11** and average distances **3.258–3.491 km**, with no monotonic passenger–fare trend. Two-passenger trips have higher fare and distance than single-passenger trips ($11.79 / 3.491 km vs $11.16 / 3.258 km); six passengers have the highest common-group fare ($12.11), but not the longest distance (3.387 km). These means do not isolate a passenger effect. Pearson **0.0132** and MI **0.0073** indicate weak observed univariate relevance.
+
+Only **64** trips fall outside counts 1–6: 7 (13), 8 (7), 9 (21), 129 (1), 208 (22). Counts 129/208 are data-quality flags; all records remain unchanged. Rare-group means cannot support general passenger conclusions.
+
+New artifacts: [correlation heatmap](figures/week2/feature_correlation_heatmap.png), [target correlations](figures/week2/feature_target_correlation.png), [MI relevance](figures/week2/feature_relevance.png), [passenger fare/distance comparison](figures/week2/average_fare_by_passenger_count.png), and [full passenger aggregation](passenger_count_stats.csv).

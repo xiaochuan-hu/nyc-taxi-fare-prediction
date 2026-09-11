@@ -1,0 +1,29 @@
+{
+  "eda_sample_rows": 300000,
+  "mi_sample_rows": 50000,
+  "random_state": 42,
+  "n_neighbors": 5,
+  "sklearn_version": "1.9.0",
+  "numpy_version": "2.5.2",
+  "pandas_version": "3.0.5",
+  "eda_sample_sha256": "534007f621d5c270e4e905c8f2f59bcb4bda1482b16ec0d386d79c5d927e1fe5",
+  "features": [
+    "trip_distance",
+    "pickup_hour",
+    "day_of_week",
+    "is_weekend",
+    "passenger_count",
+    "pickup_longitude",
+    "pickup_latitude",
+    "dropoff_longitude",
+    "dropoff_latitude"
+  ],
+  "discrete_features": [
+    "day_of_week",
+    "is_weekend",
+    "passenger_count",
+    "pickup_hour"
+  ],
+  "target": "fare_amount",
+  "mi_units": "nats"
+}
