@@ -1,0 +1,64 @@
+{
+  "source_dataset": "/Users/xiaochuan/nyc-taxi-fare-prediction/data/processed/train_features.csv",
+  "source_size_bytes": 6904121640,
+  "source_mtime_ns": 1788268728177853774,
+  "full_row_count": 54004358,
+  "eligible_row_count": 54003614,
+  "excluded_row_count": 744,
+  "eligibility_rules": {
+    "passenger_count": {
+      "minimum_inclusive": 1,
+      "maximum_inclusive": 6
+    },
+    "fare_amount": {
+      "minimum_inclusive": 2.5,
+      "maximum": null
+    },
+    "required_values": "All target and feature values must be finite and non-missing",
+    "trip_distance": "No distance-based exclusion; zero, near-zero and long trips retained",
+    "coordinates_and_temporal": "Audit only; stop for review on violations, no silent filtering"
+  },
+  "chunk_size": 500000,
+  "random_seed": 42,
+  "created_at_utc": "2026-09-11T15:08:24.063313+00:00",
+  "target": "fare_amount",
+  "features": [
+    "trip_distance",
+    "pickup_hour",
+    "day_of_week",
+    "is_weekend",
+    "passenger_count",
+    "pickup_longitude",
+    "pickup_latitude",
+    "dropoff_longitude",
+    "dropoff_latitude"
+  ],
+  "sampling_method": "One-pass random-priority reservoir over eligible rows; no stratification",
+  "requested_sample_rows": 1000000,
+  "actual_sample_rows": 1000000,
+  "versions": {
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.0"
+  },
+  "audit_note": "Flag counts overlap; percentages use full source rows; nonfinite includes NaN",
+  "audit_counts": {
+    "total_rows": 54004358,
+    "eligible_rows": 54003614,
+    "fare_below_2_5": 680,
+    "passenger_below_1": 0,
+    "passenger_above_6": 64,
+    "zero_distance": 557212,
+    "near_zero_distance_le_0_1": 870955,
+    "missing_rows": 0,
+    "nonfinite_rows": 0,
+    "coordinate_violations": 0,
+    "temporal_violations": 0,
+    "weekend_consistency_violations": 0,
+    "distance_above_20": 633221,
+    "distance_above_30": 4582,
+    "fare_above_100": 10505,
+    "fare_above_200": 427,
+    "excluded_rows": 744
+  }
+}

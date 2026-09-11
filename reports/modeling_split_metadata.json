@@ -1,0 +1,129 @@
+{
+  "source_dataset": "/Users/xiaochuan/nyc-taxi-fare-prediction/data/processed/train_features.csv",
+  "modelling_sample_path": "/Users/xiaochuan/nyc-taxi-fare-prediction/data/processed/modeling_sample_1m.csv",
+  "modelling_sample_size": 1000000,
+  "eligible_population_size": 54003614,
+  "features": [
+    "trip_distance",
+    "pickup_hour",
+    "day_of_week",
+    "is_weekend",
+    "passenger_count",
+    "pickup_longitude",
+    "pickup_latitude",
+    "dropoff_longitude",
+    "dropoff_latitude"
+  ],
+  "target": "fare_amount",
+  "random_state": 42,
+  "test_size": 0.2,
+  "train_rows": 800000,
+  "test_rows": 200000,
+  "eligibility_rules": {
+    "passenger_count": {
+      "minimum_inclusive": 1,
+      "maximum_inclusive": 6
+    },
+    "fare_amount": {
+      "minimum_inclusive": 2.5,
+      "maximum": null
+    },
+    "required_values": "All target and feature values must be finite and non-missing",
+    "trip_distance": "No distance-based exclusion; zero, near-zero and long trips retained",
+    "coordinates_and_temporal": "Audit only; stop for review on violations, no silent filtering"
+  },
+  "sampling_method": "One-pass random-priority reservoir over eligible rows; no stratification",
+  "versions": {
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.0"
+  },
+  "created_at_utc": "2026-09-11T15:08:26.435484+00:00",
+  "split_overlap": 0,
+  "target_summary": [
+    {
+      "split": "train",
+      "rows": 800000,
+      "mean": 11.268650587499998,
+      "median": 8.5
+    },
+    {
+      "split": "test",
+      "rows": 200000,
+      "mean": 11.264544599999999,
+      "median": 8.5
+    }
+  ],
+  "sample_subgroup_counts": {
+    "fare_below_2_5": 0,
+    "passenger_below_1": 0,
+    "passenger_above_6": 0,
+    "zero_distance": 10449,
+    "near_zero_distance_le_0_1": 16201,
+    "missing_rows": 0,
+    "nonfinite_rows": 0,
+    "coordinate_violations": 0,
+    "temporal_violations": 0,
+    "weekend_consistency_violations": 0,
+    "distance_above_20": 11580,
+    "distance_above_30": 77,
+    "fare_above_100": 161,
+    "fare_above_200": 6
+  },
+  "sample_fare_quantiles": {
+    "0.0": 2.5,
+    "0.01": 3.3,
+    "0.05": 4.1,
+    "0.5": 8.5,
+    "0.95": 30.0,
+    "0.99": 52.0,
+    "0.999": 74.50010000000475,
+    "1.0": 500.0
+  },
+  "sample_distance_quantiles": {
+    "0.0": 0.0,
+    "0.01": 0.0,
+    "0.05": 0.5590923113790844,
+    "0.5": 2.1519324721060133,
+    "0.95": 9.950729506027486,
+    "0.99": 20.27869349777489,
+    "0.999": 23.050336615235576,
+    "1.0": 45.50476368814526
+  },
+  "sample_hour_distribution_pct": {
+    "0": 3.9858,
+    "1": 2.9386,
+    "2": 2.1999999999999997,
+    "3": 1.5958,
+    "4": 1.1743999999999999,
+    "5": 0.9884999999999999,
+    "6": 2.0443,
+    "7": 3.5809,
+    "8": 4.5431,
+    "9": 4.6573,
+    "10": 4.532,
+    "11": 4.652,
+    "12": 4.8959,
+    "13": 4.8939,
+    "14": 5.0517,
+    "15": 4.7995,
+    "16": 4.1422,
+    "17": 4.9453,
+    "18": 6.0354,
+    "19": 6.2075,
+    "20": 5.9235999999999995,
+    "21": 5.7074,
+    "22": 5.5561,
+    "23": 4.948799999999999
+  },
+  "sample_day_distribution_pct": {
+    "0": 12.829699999999999,
+    "1": 14.0183,
+    "2": 14.491000000000001,
+    "3": 14.9369,
+    "4": 15.3692,
+    "5": 15.1934,
+    "6": 13.1615
+  },
+  "index_note": "Unique sample positions used only in memory; no indices or partition CSVs exported"
+}
