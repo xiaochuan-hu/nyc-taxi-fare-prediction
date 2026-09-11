@@ -1,0 +1,122 @@
+{
+  "modeling_sample_sha256": "c0a1f2eba4a90d1581faeaa707d7ae869423a8c5f76c337b6024a3c9fc933aef",
+  "train_indices_sha256": "3a708f8187d5137d9fa78fee5abaa8dbd7db6dca3cd48fe6c103b43dec9e6df3",
+  "test_indices_sha256": "3514db48cdb7a5a86e8cd5bb038eccb4b8c55867a095288c63b89dce367b756f",
+  "model_class": "sklearn.ensemble._forest.RandomForestRegressor",
+  "exact_random_forest_parameters": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "criterion": "squared_error",
+    "max_depth": 20,
+    "max_features": 1.0,
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 2,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 100,
+    "n_jobs": -1,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "model_action": "Reconstructed from all exact benchmark parameters on frozen full training set",
+  "reconstruction_fit_seconds": 59.49027237499831,
+  "validated_metrics": {
+    "rmse": 3.8092990267752875,
+    "mae": 1.9519688541925353,
+    "r2": 0.8359618944512055
+  },
+  "benchmark_metrics_match": true,
+  "metric_comparison_atol": 1e-06,
+  "train_rows": 800000,
+  "test_rows": 200000,
+  "target": "fare_amount",
+  "features": [
+    "trip_distance",
+    "pickup_hour",
+    "day_of_week",
+    "is_weekend",
+    "passenger_count",
+    "pickup_longitude",
+    "pickup_latitude",
+    "dropoff_longitude",
+    "dropoff_latitude"
+  ],
+  "impurity_importance_method": "Forest mean of normalized weighted squared-error impurity reduction",
+  "permutation_scoring": "neg_root_mean_squared_error",
+  "permutation_direction": "Positive = permuted RMSE minus original subset RMSE; larger means greater deterioration",
+  "permutation_subset_size": 50000,
+  "permutation_subset_method": "default_rng(42).choice(len(X_test), size=50000, replace=False), positional selection",
+  "permutation_subset_positions_sha256": "15aa79e755ef24ebd6069da40489fc3265802152a9f976052c8d00327fa30e79",
+  "permutation_seed": 42,
+  "permutation_repeats": 5,
+  "permutation_n_jobs": -1,
+  "permutation_backend": "threading",
+  "permutation_seconds": 6.077632500004256,
+  "permutation_error_bars": "Standard deviation across five shuffles, not confidence intervals",
+  "top5_impurity_features": [
+    "trip_distance",
+    "dropoff_longitude",
+    "pickup_longitude",
+    "dropoff_latitude",
+    "pickup_latitude"
+  ],
+  "top5_permutation_features": [
+    "trip_distance",
+    "dropoff_longitude",
+    "dropoff_latitude",
+    "pickup_longitude",
+    "pickup_latitude"
+  ],
+  "top5_overlap_count": 5,
+  "residual_summary": {
+    "rows": 200000,
+    "residual_mean": 0.008082658391027677,
+    "residual_median": -0.3977422624887774,
+    "residual_std": 3.8092999750421317,
+    "absolute_error_median": 1.1840051800860465,
+    "absolute_error_p90": 4.067437550132189,
+    "absolute_error_p95": 5.949176759247352,
+    "absolute_error_p99": 13.30215811163481,
+    "mean_error_predicted_minus_actual": -0.008082658391027677
+  },
+  "mean_error_definition": "prediction minus actual; negative = underprediction",
+  "fare_band_boundaries": [
+    "[2.50, 10]",
+    "(10, 20]",
+    "(20, 40]",
+    "(40, 100]",
+    ">100"
+  ],
+  "plot_subset_size": 20000,
+  "plot_seed": 42,
+  "generated_report_paths": [
+    "reports/random_forest_feature_importance.csv",
+    "reports/random_forest_permutation_importance.csv",
+    "reports/model_feature_importance_summary.csv",
+    "reports/model_error_by_fare_band.csv",
+    "reports/model_error_zero_distance.csv",
+    "reports/model_error_by_pickup_hour.csv",
+    "reports/model_error_by_passenger_count.csv",
+    "reports/model_interpretation_metadata.json"
+  ],
+  "generated_figure_paths": [
+    "reports/figures/week3/random_forest_feature_importance.png",
+    "reports/figures/week3/random_forest_permutation_importance.png",
+    "reports/figures/week3/model_rmse_by_pickup_hour.png",
+    "reports/figures/week3/actual_vs_predicted.png",
+    "reports/figures/week3/residual_distribution.png"
+  ],
+  "versions": {
+    "sklearn": "1.9.0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "python": "3.14.6"
+  },
+  "started_at_utc": "2026-09-11T16:24:04.401680+00:00",
+  "completed_at_utc": "2026-09-11T16:25:11.764378+00:00"
+}
