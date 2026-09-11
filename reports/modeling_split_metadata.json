@@ -125,5 +125,21 @@
     "5": 15.1934,
     "6": 13.1615
   },
-  "index_note": "Unique sample positions used only in memory; no indices or partition CSVs exported"
+  "index_note": "Unique sample positions used only in memory; no indices or partition CSVs exported",
+  "reproducibility": {
+    "modeling_sample_sha256": "c0a1f2eba4a90d1581faeaa707d7ae869423a8c5f76c337b6024a3c9fc933aef",
+    "modeling_sample_size_bytes": 75078404,
+    "split_indices_artifact": "data/processed/modeling_split_indices.npz",
+    "train_indices_sha256": "3a708f8187d5137d9fa78fee5abaa8dbd7db6dca3cd48fe6c103b43dec9e6df3",
+    "test_indices_sha256": "3514db48cdb7a5a86e8cd5bb038eccb4b8c55867a095288c63b89dce367b756f",
+    "index_dtype": "int64",
+    "index_byte_order": "little",
+    "index_semantics": "Ordered zero-based row positions in the fingerprinted modeling sample CSV",
+    "split_algorithm": "sklearn.model_selection.train_test_split",
+    "shuffle": true,
+    "test_size": 0.2,
+    "random_state": 42,
+    "phase3a_metadata_match": true,
+    "mean_comparison_atol": 1e-06
+  }
 }
