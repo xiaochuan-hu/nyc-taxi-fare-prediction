@@ -1,0 +1,198 @@
+{
+  "modeling_sample_path": "/Users/xiaochuan/nyc-taxi-fare-prediction/data/processed/modeling_sample_1m.csv",
+  "modeling_sample_sha256": "c0a1f2eba4a90d1581faeaa707d7ae869423a8c5f76c337b6024a3c9fc933aef",
+  "train_indices_sha256": "3a708f8187d5137d9fa78fee5abaa8dbd7db6dca3cd48fe6c103b43dec9e6df3",
+  "test_indices_sha256": "3514db48cdb7a5a86e8cd5bb038eccb4b8c55867a095288c63b89dce367b756f",
+  "split_indices_artifact": "/Users/xiaochuan/nyc-taxi-fare-prediction/data/processed/modeling_split_indices.npz",
+  "train_rows": 800000,
+  "test_rows": 200000,
+  "features": [
+    "trip_distance",
+    "pickup_hour",
+    "day_of_week",
+    "is_weekend",
+    "passenger_count",
+    "pickup_longitude",
+    "pickup_latitude",
+    "dropoff_longitude",
+    "dropoff_latitude"
+  ],
+  "target": "fare_amount",
+  "sklearn_version": "1.9.0",
+  "python_version": "3.14.6",
+  "numpy_version": "2.5.2",
+  "pandas_version": "3.0.5",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "random_state": 42,
+  "primary_metric": "test RMSE",
+  "rmse_calculation": "sqrt(mean_squared_error)",
+  "started_at_utc": "2026-09-11T16:05:49.442982+00:00",
+  "completed_at_utc": "2026-09-11T16:06:53.822851+00:00",
+  "models": [
+    {
+      "model": "Median Baseline",
+      "class_name": "sklearn.dummy.DummyRegressor",
+      "parameters": {
+        "constant": null,
+        "quantile": null,
+        "strategy": "median"
+      },
+      "train_rows": 800000,
+      "test_rows": 200000,
+      "train_indices_sha256": "3a708f8187d5137d9fa78fee5abaa8dbd7db6dca3cd48fe6c103b43dec9e6df3",
+      "test_indices_sha256": "3514db48cdb7a5a86e8cd5bb038eccb4b8c55867a095288c63b89dce367b756f",
+      "started_at_utc": "2026-09-11T16:05:49.447619+00:00",
+      "status": "success",
+      "metrics": {
+        "model": "Median Baseline",
+        "rmse": 9.803182718994888,
+        "mae": 5.3035993999999995,
+        "r2": -0.08639762714471555,
+        "fit_seconds": 0.022178500003064983,
+        "predict_seconds": 9.112499537877738e-05
+      },
+      "prediction_sanity": {
+        "shape": [
+          200000
+        ],
+        "all_finite": true,
+        "min": 8.5,
+        "median": 8.5,
+        "max": 8.5
+      }
+    },
+    {
+      "model": "Random Forest",
+      "class_name": "sklearn.ensemble._forest.RandomForestRegressor",
+      "parameters": {
+        "bootstrap": true,
+        "ccp_alpha": 0.0,
+        "criterion": "squared_error",
+        "max_depth": 20,
+        "max_features": 1.0,
+        "max_leaf_nodes": null,
+        "max_samples": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "n_estimators": 100,
+        "n_jobs": -1,
+        "oob_score": false,
+        "random_state": 42,
+        "verbose": 0,
+        "warm_start": false
+      },
+      "train_rows": 800000,
+      "test_rows": 200000,
+      "train_indices_sha256": "3a708f8187d5137d9fa78fee5abaa8dbd7db6dca3cd48fe6c103b43dec9e6df3",
+      "test_indices_sha256": "3514db48cdb7a5a86e8cd5bb038eccb4b8c55867a095288c63b89dce367b756f",
+      "started_at_utc": "2026-09-11T16:05:49.516698+00:00",
+      "status": "success",
+      "metrics": {
+        "model": "Random Forest",
+        "rmse": 3.8092990267752875,
+        "mae": 1.9519688541925353,
+        "r2": 0.8359618944512055,
+        "fit_seconds": 59.65915137500269,
+        "predict_seconds": 0.49725583399413154
+      },
+      "prediction_sanity": {
+        "shape": [
+          200000
+        ],
+        "all_finite": true,
+        "min": 3.4773066428054253,
+        "median": 8.626277900075586,
+        "max": 145.38971642857143
+      }
+    },
+    {
+      "model": "HistGradientBoosting",
+      "class_name": "sklearn.ensemble._hist_gradient_boosting.gradient_boosting.HistGradientBoostingRegressor",
+      "parameters": {
+        "categorical_features": "from_dtype",
+        "early_stopping": "auto",
+        "interaction_cst": null,
+        "l2_regularization": 0.0,
+        "learning_rate": 0.1,
+        "loss": "squared_error",
+        "max_bins": 255,
+        "max_depth": null,
+        "max_features": 1.0,
+        "max_iter": 200,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "monotonic_cst": null,
+        "n_iter_no_change": 10,
+        "quantile": null,
+        "random_state": 42,
+        "scoring": "loss",
+        "tol": 1e-07,
+        "validation_fraction": 0.1,
+        "verbose": 0,
+        "warm_start": false
+      },
+      "train_rows": 800000,
+      "test_rows": 200000,
+      "train_indices_sha256": "3a708f8187d5137d9fa78fee5abaa8dbd7db6dca3cd48fe6c103b43dec9e6df3",
+      "test_indices_sha256": "3514db48cdb7a5a86e8cd5bb038eccb4b8c55867a095288c63b89dce367b756f",
+      "started_at_utc": "2026-09-11T16:06:49.769872+00:00",
+      "status": "success",
+      "metrics": {
+        "model": "HistGradientBoosting",
+        "rmse": 3.8478650223111113,
+        "mae": 1.9807530239746534,
+        "r2": 0.8326235810042659,
+        "fit_seconds": 3.603362082998501,
+        "predict_seconds": 0.2047149590071058
+      },
+      "prediction_sanity": {
+        "shape": [
+          200000
+        ],
+        "all_finite": true,
+        "min": -0.05341711711657248,
+        "median": 8.657659808645889,
+        "max": 125.06553927031578
+      },
+      "actual_iterations": 200,
+      "early_stopping_used": true
+    }
+  ],
+  "results": [
+    {
+      "model": "Random Forest",
+      "rmse": 3.8092990267752875,
+      "mae": 1.9519688541925353,
+      "r2": 0.8359618944512055,
+      "fit_seconds": 59.65915137500269,
+      "predict_seconds": 0.49725583399413154,
+      "rmse_improvement_pct": 61.14222150124474
+    },
+    {
+      "model": "HistGradientBoosting",
+      "rmse": 3.8478650223111113,
+      "mae": 1.9807530239746534,
+      "r2": 0.8326235810042659,
+      "fit_seconds": 3.603362082998501,
+      "predict_seconds": 0.2047149590071058,
+      "rmse_improvement_pct": 60.7488186988967
+    },
+    {
+      "model": "Median Baseline",
+      "rmse": 9.803182718994888,
+      "mae": 5.3035993999999995,
+      "r2": -0.08639762714471555,
+      "fit_seconds": 0.022178500003064983,
+      "predict_seconds": 9.112499537877738e-05,
+      "rmse_improvement_pct": 0.0
+    }
+  ],
+  "best_performing_model": "Random Forest",
+  "benchmark_complete": true,
+  "resource_errors": [],
+  "scope": "Initial benchmark only; no tuning, scaling, target transformation, feature selection, or feature-importance analysis",
+  "timing_note": "Wall-clock fit and predict timings; metrics excluded; models trained sequentially"
+}
