@@ -1,5 +1,5 @@
 {
-  "source_dataset": "/Users/xiaochuan/nyc-taxi-fare-prediction/data/processed/train_features.csv",
+  "source_dataset": "data/processed/train_features.csv",
   "source_size_bytes": 6904121640,
   "source_mtime_ns": 1788268728177853774,
   "full_row_count": 54004358,

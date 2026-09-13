@@ -8,7 +8,7 @@ Random Forest achieved test RMSE of $3.81, MAE of $1.95, and R² of 0.836. Its R
 
 Typical errors were substantially smaller than tail errors: median absolute error was $1.18, but zero-distance trips had about 2.93 times the RMSE of positive-distance trips. Fares above $100 were strongly underpredicted, although that test segment contained only 36 records. Near-zero aggregate bias therefore obscures important subgroup weaknesses.
 
-The practical priorities are to combine distance and location in fare estimates, validate ambiguous zero-distance routes separately, and develop evidence-based uncertainty safeguards for expensive trips. Additional route-context data and prospective validation are needed before operational use. The current model is an initial predictive model, not a production-ready pricing system. This synthesis changes neither the frozen data nor the trained-model benchmark.
+The practical priorities are to combine distance and location in fare estimates, validate ambiguous zero-distance routes separately, and develop evidence-based uncertainty safeguards for expensive trips. Additional route-context data and prospective validation are needed before operational use. The current model is an initial predictive model, not a production-ready pricing system.
 
 ## 2. Business Problem
 
@@ -16,7 +16,7 @@ Customers and operations teams need fare estimates that reflect trip characteris
 
 ## 3. Data and Methodology
 
-The processed source contains **54,004,358 rows**; **54,003,614** satisfy the modelling policy. Eligible records have 1–6 passengers, fare at least $2.50 and finite required values. Zero/near-zero distances, long trips and high fares remain eligible. A uniform random **1,000,000-row** eligible sample supports a frozen **80/20** train/test split; fingerprints and saved indices preserve reproducibility. [Population audit](modeling_eligibility_metadata.json), [split record](modeling_split_metadata.json)
+The processed source contains **54,004,358 rows**; **54,003,614** satisfy the modelling policy. Eligible records have 1–6 passengers, fare at least $2.50 and finite required values. Zero/near-zero distances, long trips and high fares remain eligible. A uniform random **1,000,000-row** eligible sample supports a frozen **800,000/200,000 train/test split**. [Population audit](modeling_eligibility_metadata.json), [split record](modeling_split_metadata.json)
 
 Feature engineering provides Haversine trip distance and pickup hour/day/weekend fields, alongside passenger count and four coordinates. The identifier and raw datetime string are excluded; fare is the sole target. EDA combines reproducible samples with full-data temporal and geographic summaries. A training-only median baseline, Random Forest and HistGradientBoosting were compared with fixed first-pass parameters, without tuning. Interpretation uses RF impurity importance and five-repeat permutation importance on a fixed 50,000-row test subset; error analysis uses the full 200,000-row test set. [EDA](week2_key_findings.md), [interpretation methods](model_interpretation_metadata.json)
 
@@ -27,7 +27,7 @@ Feature engineering provides Haversine trip distance and pickup hour/day/weekend
 - **The learned model improves substantially on a naive estimate:** Random Forest reduces test RMSE by **61.1422%** versus the median baseline.
 - **Typical trips and exceptions differ:** median absolute error is **$1.1840**, while zero-distance and high-fare segments have much larger errors.
 
-These findings are supported by the [reviewed EDA](week2_key_findings.md), [benchmark](model_benchmark_results.csv) and [importance comparison](model_feature_importance_summary.csv); they do not establish causes of fare changes.
+Sources: [reviewed EDA](week2_key_findings.md), [benchmark](model_benchmark_results.csv), [importance comparison](model_feature_importance_summary.csv).
 
 ## 5. Predictive Modeling
 
@@ -37,7 +37,7 @@ These findings are supported by the [reviewed EDA](week2_key_findings.md), [benc
 | Random Forest | 3.809299 | 1.951969 | 0.835962 |
 | HistGradientBoosting | 3.847865 | 1.980753 | 0.832624 |
 
-RMSE gives extra weight to large mistakes; MAE reports the average absolute dollar error; R² describes squared-error improvement over a constant test-mean reference, not classification accuracy. Random Forest is the **best-performing model in the initial benchmark**: RMSE **$3.81**, MAE **$1.95**. HistGradientBoosting performs similarly, and one frozen split cannot establish a universally superior model. [Benchmark results](model_benchmark_results.csv)
+RMSE gives extra weight to large mistakes; MAE reports the average absolute dollar error; R² describes squared-error improvement over a constant test-mean reference, not classification accuracy. Random Forest is the **best-performing model in the initial benchmark**: RMSE **$3.8093**, MAE **$1.9520**, R² **0.8360**, with **61.14%** lower RMSE than the median baseline. HistGradientBoosting performs similarly, and one frozen split cannot establish a universally superior model. [Benchmark results](model_benchmark_results.csv)
 
 ## 6. Model Interpretation and Error Analysis
 
@@ -53,7 +53,7 @@ Full-test absolute-error median/P90/P95/P99 are **$1.1840/$4.0674/$5.9492/$13.30
 
 Zero-distance RMSE is **2.93×** positive-distance RMSE, without proving the records are incorrect. The >$100 tail has only **36 test rows**, so it identifies a weakness but cannot support a stable operational threshold. These segments overlap and their row counts should not be added. [Distance slices](model_error_zero_distance.csv), [fare bands](model_error_by_fare_band.csv)
 
-Using **mean error = predicted − actual**, the lowest fare band is overpredicted by **$0.7292**, while >$100 fares are underpredicted by **$72.3029**. The overall mean error is only **$-0.0081**. Small aggregate bias therefore hides fare-band-specific bias. The residual convention is the opposite sign: **actual − predicted**, with median **-0.3977**. [Error evidence](model_interpretation_metadata.json)
+Using **mean error = predicted − actual**, the lowest fare band is overpredicted by **$0.7292**, while >$100 fares are underpredicted by **$72.3029**. The overall mean error is only **−$0.0081**. Small aggregate bias therefore hides fare-band-specific bias. Residuals use **actual − predicted**, with median **-0.3977**. [Error evidence](model_interpretation_metadata.json)
 
 ## 7. Strategic Recommendations
 
@@ -69,4 +69,4 @@ Haversine distance differs from road distance. Weather, traffic, toll, airport a
 
 Before operational adoption, obtain richer trip-context data, assess a forward-looking evaluation population, validate uncertainty and exception handling, and evaluate service requirements and drift. These are proposals, not completed experiments. The project provides an initial predictive model and evidence for prioritizing work; it does not provide deployment validation or a causal pricing strategy.
 
-*Editorial scope: this concise Markdown draft is intended for later formatting into approximately five pages or fewer; pagination has not been rendered in this phase.*
+*Prepared for a final report of approximately five pages or fewer; final pagination remains subject to layout review.*

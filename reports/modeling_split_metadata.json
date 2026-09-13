@@ -1,6 +1,6 @@
 {
-  "source_dataset": "/Users/xiaochuan/nyc-taxi-fare-prediction/data/processed/train_features.csv",
-  "modelling_sample_path": "/Users/xiaochuan/nyc-taxi-fare-prediction/data/processed/modeling_sample_1m.csv",
+  "source_dataset": "data/processed/train_features.csv",
+  "modelling_sample_path": "data/processed/modeling_sample_1m.csv",
   "modelling_sample_size": 1000000,
   "eligible_population_size": 54003614,
   "features": [
